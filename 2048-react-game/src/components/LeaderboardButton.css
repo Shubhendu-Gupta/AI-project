@@ -1,0 +1,47 @@
+.leaderboard-button {
+  background-color: #8f7a66;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 14px 28px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.leaderboard-button:hover {
+  background-color: #9f8a76;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.leaderboard-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trophy-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.button-text {
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .leaderboard-button {
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+
+  .trophy-icon {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,27 @@
+.grid-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  background-color: #bbada0;
+  border-radius: 6px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.grid-cells {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  position: absolute;
+  inset: 15px;
+}
+
+.grid-cell {
+  background-color: rgba(238, 228, 218, 0.35);
+  border-radius: 3px;
+}
+
+.grid-tiles {
+  position: absolute;
+  inset: 15px;
+}

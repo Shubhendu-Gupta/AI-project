@@ -1,0 +1,57 @@
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 500px;
+}
+
+.game-title {
+  font-size: 64px;
+  font-weight: bold;
+  color: #776e65;
+  margin: 0;
+}
+
+.game-info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.score-container {
+  background-color: #bbada0;
+  padding: 10px 20px;
+  border-radius: 3px;
+  text-align: center;
+  min-width: 60px;
+}
+
+.score-label {
+  font-size: 12px;
+  color: #eee4da;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.score-value {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+.restart-button {
+  background-color: #8f7a66;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.restart-button:hover {
+  background-color: #9f8a76;
+}
