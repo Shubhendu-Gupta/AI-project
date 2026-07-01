@@ -22,7 +22,7 @@ const normalizeHnItem = (item: Record<string, unknown>): Article => ({
   imageUrl: null,
   author: item.by ? String(item.by) : null,
   authorImage: null,
-  publishedAt: new Date((Number(item.time) ?? 0) * 1000).toISOString(),
+  publishedAt: new Date((item.time != null ? Number(item.time) : 0) * 1000).toISOString(),
   tags: [],
   score: Number(item.score ?? 0),
   commentCount: item.descendants != null ? Number(item.descendants) : null,
