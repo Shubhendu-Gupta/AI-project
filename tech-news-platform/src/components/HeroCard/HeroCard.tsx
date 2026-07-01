@@ -12,11 +12,7 @@ interface HeroCardProps {
 
 export const HeroCard = ({ article, isBookmarked, onBookmark }: HeroCardProps) => {
   const handleShare = async () => {
-    try {
-      await shareArticle(article)
-    } catch {
-      // share cancelled or failed silently
-    }
+    await shareArticle(article)
   }
 
   return (
