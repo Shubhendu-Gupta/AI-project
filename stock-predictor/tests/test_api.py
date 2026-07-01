@@ -34,39 +34,53 @@ class TestHealthEndpoint:
 
 class TestSubmitEndpoint:
     def test_valid_submit_returns_job_id(self):
-        res = client.post('/api/predict/submit?ticker=AAPL&period=5y')
+        res = client.get('/api/predict/submit?ticker=AAPL&period=5y')
         assert res.status_code == 200
         body = res.json()
         assert 'job_id' in body
         assert isinstance(body['job_id'], str)
 
     def test_invalid_ticker_rejected(self):
-        res = client.post('/api/predict/submit?ticker=A@PL')
+        res = client.get('/api/predict/submit?ticker=A@PL')
         assert res.status_code == 400
         assert 'Invalid ticker' in res.json()['detail']
 
+    def test_exchange_suffix_accepted(self):
+        res = client.get('/api/predict/submit?ticker=ITC.NS&period=5y')
+        assert res.status_code == 200
+        assert 'job_id' in res.json()
+
+    def test_bse_suffix_accepted(self):
+        res = client.get('/api/predict/submit?ticker=RELIANCE.BO&period=5y')
+        assert res.status_code == 200
+        assert 'job_id' in res.json()
+
+    def test_invalid_suffix_rejected(self):
+        res = client.get('/api/predict/submit?ticker=ITC.12345')
+        assert res.status_code == 400
+
     def test_invalid_period_rejected(self):
-        res = client.post('/api/predict/submit?ticker=AAPL&period=99y')
+        res = client.get('/api/predict/submit?ticker=AAPL&period=99y')
         assert res.status_code == 400
         assert 'period' in res.json()['detail']
 
     def test_too_long_ticker_rejected(self):
-        res = client.post('/api/predict/submit?ticker=TOOLONGTICKER')
+        res = client.get('/api/predict/submit?ticker=TOOLONGTICKER')
         assert res.status_code == 400
 
     def test_missing_ticker_returns_422(self):
-        res = client.post('/api/predict/submit')
+        res = client.get('/api/predict/submit')
         assert res.status_code == 422
 
     def test_ticker_uppercased(self):
-        res = client.post('/api/predict/submit?ticker=aapl&period=5y')
+        res = client.get('/api/predict/submit?ticker=aapl&period=5y')
         assert res.status_code == 200
         job_id = res.json()['job_id']
         assert job_id in jobs
 
     def test_default_period_is_5y(self):
         with patch('main._run_job') as mock_run:
-            res = client.post('/api/predict/submit?ticker=AAPL')
+            res = client.get('/api/predict/submit?ticker=AAPL')
             assert res.status_code == 200
 
 

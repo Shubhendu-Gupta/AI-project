@@ -6,7 +6,7 @@ Branch start: aaa37e3
 
 ## Tasks
 
-- [ ] Task 1: Scaffold project + Tailwind + Supabase client
+- [x] Task 1: Scaffold project + Tailwind + Supabase client
 - [ ] Task 2: TypeScript types
 - [ ] Task 3: Supabase database migrations
 - [ ] Task 4: Progress utilities
@@ -20,3 +20,4 @@ Branch start: aaa37e3
 - [ ] Task 12: Wire App.tsx and main.tsx
 - [ ] Task 13: TaskItem component test
 - [ ] Task 14: Final typecheck, lint, and build verification
+Task 1: complete (commits 90d6dfa..df36031, review clean)

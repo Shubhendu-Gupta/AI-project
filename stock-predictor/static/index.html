@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stock Prediction — LSTM Analyzer</title>
-  <script src="/static/chart.umd.min.js"></script>
+  <script src="/stock/static/chart.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -45,6 +45,8 @@
     }
     button.analyze:hover { opacity: .85; }
     button.analyze:disabled { opacity: .45; cursor: not-allowed; }
+    .ticker-hint { font-size: 12px; color: var(--muted); align-self: flex-end; padding-bottom: 11px; }
+    .ticker-hint code { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: 11px; color: var(--accent); }
 
     .status {
       display: none; align-items: center; gap: 10px; padding: 12px 18px;
@@ -111,7 +113,7 @@
   <div class="search-row">
     <div class="field">
       <label>Ticker Symbol</label>
-      <input id="ticker" type="text" placeholder="e.g. AAPL" maxlength="10" />
+      <input id="ticker" type="text" placeholder="e.g. AAPL, ITC.NS" maxlength="15" />
     </div>
     <div class="field">
       <label>Training Period</label>
@@ -123,6 +125,7 @@
       </select>
     </div>
     <button class="analyze" id="runBtn" onclick="runPrediction()">Analyze</button>
+    <span class="ticker-hint">Indian stocks: add <code>.NS</code> (NSE) or <code>.BO</code> (BSE) — e.g. <code>ITC.NS</code></span>
   </div>
 
   <div class="status" id="statusBox">
@@ -194,7 +197,7 @@ async function runPrediction() {
   // Step 1: submit job (returns immediately)
   let jobId;
   try {
-    const sub = await fetch(`/api/predict/submit?ticker=${encodeURIComponent(ticker)}&period=${period}`, { method: 'POST' });
+    const sub = await fetch(`/api/predict/submit?ticker=${encodeURIComponent(ticker)}&period=${period}`);
     const subData = await sub.json();
     if (!sub.ok) throw new Error(subData.detail || 'Submission failed.');
     jobId = subData.job_id;

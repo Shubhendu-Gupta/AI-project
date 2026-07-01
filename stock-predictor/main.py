@@ -1,4 +1,5 @@
 import uuid
+import re
 import asyncio
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
@@ -29,15 +30,16 @@ def _run_job(job_id: str, ticker: str, period: str) -> None:
         jobs[job_id] = {'status': 'error', 'code': 500, 'detail': f'Model error: {str(e)}'}
 
 
-@app.post('/api/predict/submit')
+@app.get('/api/predict/submit')
 async def submit(
     ticker: str = Query(...),
     period: str = Query('5y'),
 ):
     """Enqueue a prediction job and return a job_id immediately."""
     ticker = ticker.upper().strip()
-    if not ticker.isalpha() or len(ticker) > 10:
-        raise HTTPException(status_code=400, detail='Invalid ticker symbol.')
+    # Allow letters plus an optional exchange suffix like .NS, .BO, .L, .T etc.
+    if not re.fullmatch(r'[A-Z]{1,10}(\.[A-Z]{1,4})?', ticker):
+        raise HTTPException(status_code=400, detail='Invalid ticker symbol. Use e.g. AAPL, ITC.NS, RELIANCE.NS')
     if period not in VALID_PERIODS:
         raise HTTPException(status_code=400, detail=f'period must be one of {sorted(VALID_PERIODS)}.')
 

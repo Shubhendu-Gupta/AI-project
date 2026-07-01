@@ -8,6 +8,10 @@ export default defineConfig({
     port: 3000,
     host: true,
     allowedHosts: ['.cloudfront.net'],
+    proxy: {
+      '/stock': { target: 'http://localhost:8000', rewrite: path => path.replace(/^\/stock/, '') },
+      '/api':   'http://localhost:8000',
+    },
   },
   test: {
     globals: true,
