@@ -1,0 +1,9 @@
+# Python virtualenvs
+stock-predictor/.venv/
+stock-predictor/venv/
+job-apply-bot/venv/
+job-apply-bot/browser_profiles/
+job-apply-bot/screenshots/
+job-apply-bot/data/
+**/__pycache__/
+**/*.pyc
