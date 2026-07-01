@@ -1,0 +1,69 @@
+.trade-log {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.trade-log--empty {
+  color: var(--text);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.trade-log__title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.trade-log__scroll {
+  overflow-x: auto;
+}
+
+.trade-log__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.trade-log__table th,
+.trade-log__table td {
+  padding: 0.45rem 0.75rem;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.trade-log__table th:first-child,
+.trade-log__table td:first-child {
+  text-align: left;
+}
+
+.trade-log__th {
+  color: var(--text);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.trade-log__th:hover { color: var(--text-h); }
+
+.trade-log__row--win  td { color: #86efac; }
+.trade-log__row--loss td { color: #fca5a5; }
+
+.trade-log__long  { color: #22c55e !important; font-weight: 700; }
+.trade-log__short { color: #ef4444 !important; font-weight: 700; }
+
+.trade-log__footer td {
+  font-weight: 700;
+  color: var(--text-h);
+  border-top: 2px solid var(--border);
+}

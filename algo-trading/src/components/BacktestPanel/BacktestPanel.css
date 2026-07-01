@@ -1,0 +1,40 @@
+.backtest-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.backtest-panel--loading,
+.backtest-panel--empty {
+  color: var(--text);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.backtest-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.backtest-panel__header h2 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.backtest-panel__sparkline {
+  width: 120px;
+  height: 40px;
+}
+
+.backtest-panel__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem;
+}

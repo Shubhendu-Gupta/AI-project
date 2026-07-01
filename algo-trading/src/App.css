@@ -1,0 +1,76 @@
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.app__header {
+  margin-bottom: 1.5rem;
+}
+
+.app__header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.app__header p {
+  margin-top: 0.35rem;
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.app__layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .app__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.app__sidebar {
+  position: sticky;
+  top: 1rem;
+}
+
+.app__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* MetricCard */
+.metric-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.metric-card__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.metric-card__value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.metric-card__value--positive { color: var(--green); }
+.metric-card__value--negative { color: var(--red); }
+
+.metric-card__subtitle {
+  font-size: 0.7rem;
+  color: var(--text);
+}

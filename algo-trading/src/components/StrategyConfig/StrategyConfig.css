@@ -1,0 +1,73 @@
+.strategy-config {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.strategy-config__title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.strategy-config__section {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  margin-top: 0.5rem;
+}
+
+.strategy-config__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.strategy-config__field select,
+.strategy-config__field input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text-h);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem;
+  width: 110px;
+  text-align: right;
+}
+
+.strategy-config__field select:focus,
+.strategy-config__field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.strategy-config__run {
+  margin-top: 0.75rem;
+  width: 100%;
+  align-self: stretch;
+  background: var(--accent);
+  border: none;
+  border-radius: 7px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.65rem;
+  transition: background 0.15s;
+}
+
+.strategy-config__run:hover {
+  background: #4f46e5;
+}
