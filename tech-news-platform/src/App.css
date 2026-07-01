@@ -70,3 +70,7 @@
 @media (max-width: 639px) {
   .app-grid { grid-template-columns: 1fr; }
 }
+
+.app-hero-skeleton {
+  margin-bottom: 2rem;
+}

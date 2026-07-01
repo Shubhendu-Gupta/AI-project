@@ -62,7 +62,7 @@ const App = () => {
           <div className="app-content">
             {loading ? (
               <>
-                <div style={{ marginBottom: '2rem' }}>
+                <div className="app-hero-skeleton">
                   <SkeletonCard />
                 </div>
                 <div className="app-grid">
@@ -73,7 +73,7 @@ const App = () => {
               </>
             ) : filtered.length === 0 ? (
               <div className="app-empty">
-                <p>No articles found for this category.</p>
+                <p>{search.trim() ? 'No articles match your search.' : 'No articles found for this category.'}</p>
                 <p>Try a different filter or search term.</p>
               </div>
             ) : (
