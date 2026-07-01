@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import App from './App'
 
 describe('App', () => {
@@ -13,12 +13,12 @@ describe('App', () => {
     vi.unstubAllGlobals()
   })
 
-  it('renders the header logo', async () => {
+  it('renders the header logo', () => {
     render(<App />)
     expect(screen.getByText('Tech News')).toBeInTheDocument()
   })
 
-  it('renders filter tabs', async () => {
+  it('renders filter tabs', () => {
     render(<App />)
     expect(screen.getByText('All')).toBeInTheDocument()
     expect(screen.getByText('HackerNews')).toBeInTheDocument()
@@ -34,7 +34,7 @@ describe('App', () => {
   it('shows empty state when no articles returned', async () => {
     render(<App />)
     await waitFor(() => {
-      expect(screen.queryByText('No articles found for this category.')).toBeInTheDocument()
+      expect(screen.getByText('No articles found for this category.')).toBeInTheDocument()
     }, { timeout: 3000 })
   })
 

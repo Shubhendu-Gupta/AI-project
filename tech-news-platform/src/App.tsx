@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useNewsApi } from './hooks/useNewsApi'
+import { useNewsApi, PAGE_SIZE } from './hooks/useNewsApi'
 import { useBookmarks } from './hooks/useBookmarks'
 import { Category } from './types/news'
 import { Header } from './components/Header/Header'
@@ -10,8 +10,6 @@ import { SkeletonCard } from './components/SkeletonCard/SkeletonCard'
 import { Pagination } from './components/Pagination/Pagination'
 import { Sidebar } from './components/Sidebar/Sidebar'
 import './App.css'
-
-const PAGE_SIZE = 10
 
 const App = () => {
   const [category, setCategory] = useState<Category>('all')
@@ -71,7 +69,7 @@ const App = () => {
                   ))}
                 </div>
               </>
-            ) : filtered.length === 0 ? (
+            ) : filtered.length === 0 && !error ? (
               <div className="app-empty">
                 <p>{search.trim() ? 'No articles match your search.' : 'No articles found for this category.'}</p>
                 <p>Try a different filter or search term.</p>
@@ -106,10 +104,7 @@ const App = () => {
           <div className="app-sidebar">
             <Sidebar
               bookmarks={bookmarks}
-              onRemoveBookmark={id => {
-                const article = bookmarks.find(b => b.id === id)
-                if (article) toggle(article)
-              }}
+              onRemoveBookmark={toggle}
             />
           </div>
         </div>

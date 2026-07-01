@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2023",
+    "lib": ["ES2023"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "types": ["jest", "node"],
+    "jsx": "react-jsx",
+    "outDir": "dist-test"
+  },
+  "include": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/utils", "src/hooks", "src/types", "src/components"]
+}

@@ -11,10 +11,6 @@ interface NewsCardProps {
 }
 
 export const NewsCard = ({ article, isBookmarked, onBookmark }: NewsCardProps) => {
-  const handleShare = async () => {
-    await shareArticle(article)
-  }
-
   return (
     <article className="news-card">
       <a href={article.url} target="_blank" rel="noopener noreferrer" className="news-card-image-link">
@@ -34,18 +30,18 @@ export const NewsCard = ({ article, isBookmarked, onBookmark }: NewsCardProps) =
         </a>
         {article.description != null && article.source !== 'hackernews' ? (
           <p className="news-card-description">{article.description}</p>
-        ) : (
+        ) : article.source === 'hackernews' ? (
           <p className="news-card-hn-meta">
             {article.score} points{article.commentCount != null ? ` · ${article.commentCount} comments` : ''}
           </p>
-        )}
+        ) : null}
         <div className="news-card-footer">
           <div className="news-card-meta">
             {article.author && <span className="news-card-author">{article.author}</span>}
             <span className="news-card-time">{timeAgo(article.publishedAt)}</span>
           </div>
           <div className="news-card-actions">
-            <button className="news-card-action" onClick={handleShare} aria-label="Share article" title="Share">
+            <button className="news-card-action" onClick={() => shareArticle(article)} aria-label="Share article" title="Share">
               ↗
             </button>
             <button

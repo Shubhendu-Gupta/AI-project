@@ -3,14 +3,14 @@ import { Article, Category } from '../types/news'
 
 const HN_BASE = 'https://hacker-news.firebaseio.com/v0'
 const DEVTO_BASE = 'https://dev.to/api/articles'
-const PAGE_SIZE = 10
+export const PAGE_SIZE = 10
 
 const CATEGORY_TO_TAG: Record<string, string> = {
   ai: 'ai',
   security: 'security',
   webdev: 'webdev',
   career: 'career',
-  devto: 'javascript',
+  devto: '',
 }
 
 const normalizeHnItem = (item: Record<string, unknown>): Article => ({
@@ -46,19 +46,31 @@ const normalizeDevtoArticle = (article: Record<string, unknown>): Article => {
   }
 }
 
-const fetchHnPage = async (page: number, signal: AbortSignal): Promise<Article[]> => {
+let hnTopIdsCache: { ids: number[]; fetchedAt: number } | null = null
+const HN_IDS_TTL_MS = 5 * 60 * 1000
+
+const getHnTopIds = async (signal: AbortSignal): Promise<number[]> => {
+  if (hnTopIdsCache && Date.now() - hnTopIdsCache.fetchedAt < HN_IDS_TTL_MS) {
+    return hnTopIdsCache.ids
+  }
   const idsRes = await fetch(`${HN_BASE}/topstories.json`, { signal })
   if (!idsRes.ok) throw new Error('Failed to fetch HN stories')
   const ids: number[] = await idsRes.json()
-  const pageIds = ids.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+  hnTopIdsCache = { ids, fetchedAt: Date.now() }
+  return ids
+}
+
+const fetchHnPage = async (page: number, signal: AbortSignal, limit = PAGE_SIZE): Promise<Article[]> => {
+  const ids = await getHnTopIds(signal)
+  const pageIds = ids.slice((page - 1) * PAGE_SIZE, (page - 1) * PAGE_SIZE + limit)
   const items = await Promise.all(
     pageIds.map(id =>
       fetch(`${HN_BASE}/item/${id}.json`, { signal })
         .then(r => r.json())
-        .then(normalizeHnItem)
+        .then((item: Record<string, unknown> | null) => item ? normalizeHnItem(item) : null)
     )
   )
-  return items
+  return items.filter((item): item is Article => item !== null)
 }
 
 const fetchDevtoPage = async (tag: string, page: number, signal: AbortSignal): Promise<Article[]> => {
@@ -76,13 +88,18 @@ export const useNewsApi = (category: Category, page: number, retryKey = 0) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [totalResults, setTotalResults] = useState(0)
-  const cache = useRef<Map<string, Article[]>>(new Map())
+  const cache = useRef<Map<string, { articles: Article[]; totalResults: number }>>(new Map())
 
   useEffect(() => {
     const key = `${category}-${page}`
-    if (retryKey === 0 && cache.current.has(key)) {
-      const cached = cache.current.get(key)!
+    if (retryKey > 0) {
+      cache.current.delete(key)
+    }
+    if (cache.current.has(key)) {
+      const { articles: cached, totalResults: cachedTotal } = cache.current.get(key)!
       setArticles(cached)
+      setTotalResults(cachedTotal)
+      setError(null)
       setLoading(false)
       return
     }
@@ -94,36 +111,37 @@ export const useNewsApi = (category: Category, page: number, retryKey = 0) => {
     const load = async () => {
       try {
         let results: Article[] = []
+        let total = 0
 
         if (category === 'hackernews') {
           results = await fetchHnPage(page, controller.signal)
-          setTotalResults(500)
-        } else if (category === 'devto') {
-          results = await fetchDevtoPage('', page, controller.signal)
-          setTotalResults(100)
+          total = 500
         } else if (category === 'all') {
           const [hn, devto] = await Promise.all([
-            fetchHnPage(page, controller.signal).then(r => r.slice(0, 5)),
+            fetchHnPage(page, controller.signal, 5),
             fetchDevtoPage('', page, controller.signal).then(r => r.slice(0, 5)),
           ])
           results = [...hn, ...devto].sort(
-            (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+            (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt)
           )
-          setTotalResults(600)
+          total = 600
         } else {
           const tag = CATEGORY_TO_TAG[category] ?? category
           results = await fetchDevtoPage(tag, page, controller.signal)
-          setTotalResults(100)
+          total = 100
         }
 
-        cache.current.set(key, results)
         setArticles(results)
+        setTotalResults(total)
+        cache.current.set(key, { articles: results, totalResults: total })
       } catch (err) {
         if ((err as Error).name === 'AbortError') return
         setError('Failed to load articles. Please try again.')
         setArticles([])
       } finally {
-        setLoading(false)
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
       }
     }
 

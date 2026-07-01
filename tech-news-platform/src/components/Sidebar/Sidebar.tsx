@@ -4,7 +4,7 @@ import './Sidebar.css'
 
 interface SidebarProps {
   bookmarks: Article[]
-  onRemoveBookmark: (id: string) => void
+  onRemoveBookmark: (article: Article) => void
 }
 
 export const Sidebar = ({ bookmarks, onRemoveBookmark }: SidebarProps) => (
@@ -27,7 +27,7 @@ export const Sidebar = ({ bookmarks, onRemoveBookmark }: SidebarProps) => (
                 <span className="sidebar-item-time">{timeAgo(article.publishedAt)}</span>
                 <button
                   className="sidebar-remove"
-                  onClick={() => onRemoveBookmark(article.id)}
+                  onClick={() => onRemoveBookmark(article)}
                   aria-label="Remove bookmark"
                 >
                   ×

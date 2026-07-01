@@ -28,10 +28,10 @@ describe('Sidebar', () => {
     expect(screen.getByText('Bookmarked Article')).toBeInTheDocument()
   })
 
-  it('calls onRemoveBookmark with article id', () => {
+  it('calls onRemoveBookmark with article', () => {
     const handler = vi.fn()
     render(<Sidebar bookmarks={[mockBookmark]} onRemoveBookmark={handler} />)
     fireEvent.click(screen.getByLabelText('Remove bookmark'))
-    expect(handler).toHaveBeenCalledWith('b1')
+    expect(handler).toHaveBeenCalledWith(mockBookmark)
   })
 })

@@ -25,4 +25,9 @@ describe('timeAgo', () => {
     const twoWeeks = new Date(Date.now() - 14 * 24 * 60 * 60_000).toISOString()
     expect(timeAgo(twoWeeks)).toBe('2w ago')
   })
+
+  it('returns "just now" for future dates (clock skew)', () => {
+    const future = new Date(Date.now() + 60 * 60_000).toISOString()
+    expect(timeAgo(future)).toBe('just now')
+  })
 })

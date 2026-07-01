@@ -1,0 +1,226 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0f1117;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.app__header {
+  margin-bottom: 2rem;
+}
+
+.app__header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.app__header p {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.app__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Input */
+.session-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.session-input textarea {
+  width: 100%;
+  background: #1e2330;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.8rem;
+  padding: 0.75rem;
+  resize: vertical;
+}
+
+.session-input textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+button {
+  align-self: flex-start;
+  background: #6366f1;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  transition: background 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+button:disabled {
+  background: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Totals */
+.totals-summary {
+  background: #1e2330;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.totals-summary h2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.totals-summary__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+/* Stat */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat__label {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat__value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+/* Sessions list */
+.sessions-list__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.sessions-list__header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sessions-list__header button {
+  background: #334155;
+  font-size: 0.8rem;
+}
+
+.sessions-list__header button:hover {
+  background: #475569;
+}
+
+/* Session card */
+.session-card {
+  background: #1e2330;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.session-card--error {
+  border-color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fca5a5;
+}
+
+.session-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.session-card__header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.session-card__header button {
+  background: #334155;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.8rem;
+}
+
+.session-card__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Model table */
+.model-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.model-table th,
+.model-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: right;
+  border-bottom: 1px solid #1e2a3a;
+}
+
+.model-table th:first-child,
+.model-table td:first-child {
+  text-align: left;
+}
+
+.model-table th {
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+}
+
+.model-table td {
+  color: #cbd5e1;
+  font-family: 'Fira Code', monospace;
+}

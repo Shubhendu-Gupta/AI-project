@@ -11,10 +11,6 @@ interface HeroCardProps {
 }
 
 export const HeroCard = ({ article, isBookmarked, onBookmark }: HeroCardProps) => {
-  const handleShare = async () => {
-    await shareArticle(article)
-  }
-
   return (
     <article className="hero-card">
       <a href={article.url} target="_blank" rel="noopener noreferrer" className="hero-card-image-link">
@@ -41,7 +37,7 @@ export const HeroCard = ({ article, isBookmarked, onBookmark }: HeroCardProps) =
             <span className="hero-card-time">{timeAgo(article.publishedAt)}</span>
           </div>
           <div className="hero-card-actions">
-            <button className="hero-card-action" onClick={handleShare} aria-label="Share article">↗ Share</button>
+            <button className="hero-card-action" onClick={() => shareArticle(article)} aria-label="Share article">↗ Share</button>
             <button
               className={`hero-card-action${isBookmarked ? ' bookmarked' : ''}`}
               onClick={onBookmark}
