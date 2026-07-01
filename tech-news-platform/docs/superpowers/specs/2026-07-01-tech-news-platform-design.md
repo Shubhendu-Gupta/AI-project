@@ -116,8 +116,8 @@ App.tsx
 ### `useNewsApi(category: Category, page: number)`
 - On mount and when `category` or `page` changes, fetches articles
 - HN fetch: get top story IDs → slice 10 for page → parallel fetch each item → normalize
-- Dev.to fetch: map category to tag → `GET /articles?tag={tag}&per_page=9&page={page}` → normalize
-- "all" category: fetch 5 HN stories + first 4 Dev.to articles → merge, shuffle
+- Dev.to fetch: map category to tag → `GET /articles?tag={tag}&per_page=10&page={page}` → normalize
+- "all" category: fetch 5 HN stories + 5 Dev.to articles → merge, sort by publishedAt descending
 - Cache results in `useRef<Map<string, Article[]>>` keyed by `${category}-${page}`
 - `AbortController` cancels in-flight fetch on category/page change
 - Returns `{ articles: Article[], loading: boolean, error: string | null, totalResults: number }`
