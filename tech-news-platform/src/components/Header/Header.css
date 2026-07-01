@@ -1,0 +1,44 @@
+.header {
+  background: #0f172a;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.875rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header-logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.header-search {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.875rem;
+  width: 280px;
+  outline: none;
+}
+
+.header-search::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.header-search:focus {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
