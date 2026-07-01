@@ -1,3 +1,5 @@
+import asyncio
+import functools
 import json
 import urllib.parse
 
@@ -23,10 +25,10 @@ class CareerPageDiscovery(BaseDiscovery):
             if careers_url:
                 await page.goto(careers_url)
             dom = await page.content()
+            listings = await self._extract_jobs(dom, company_url)
         except Exception:
             await page.close()
             return []
-        listings = await self._extract_jobs(dom, company_url)
         await page.close()
         return listings
 
@@ -36,10 +38,15 @@ class CareerPageDiscovery(BaseDiscovery):
             f"In this HTML, find the URL for the careers/jobs page. "
             f"Return ONLY the URL string, nothing else. If not found, return null.\n\nHTML:\n{content[:4000]}"
         )
-        response = self._client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=100,
-            messages=[{"role": "user", "content": prompt}],
+        loop = asyncio.get_event_loop()
+        response = await loop.run_in_executor(
+            None,
+            functools.partial(
+                self._client.messages.create,
+                model="claude-sonnet-4-6",
+                max_tokens=100,
+                messages=[{"role": "user", "content": prompt}],
+            ),
         )
         result = response.content[0].text.strip()
         if result.lower() in ("null", "none", ""):
@@ -55,10 +62,15 @@ class CareerPageDiscovery(BaseDiscovery):
             f"Extract job listings from this HTML that match: {titles}.\n"
             f"Return JSON array: [{{title, url, location, description}}]\nReturn ONLY JSON.\n\nHTML:\n{dom[:8000]}"
         )
-        response = self._client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=2000,
-            messages=[{"role": "user", "content": prompt}],
+        loop = asyncio.get_event_loop()
+        response = await loop.run_in_executor(
+            None,
+            functools.partial(
+                self._client.messages.create,
+                model="claude-sonnet-4-6",
+                max_tokens=2000,
+                messages=[{"role": "user", "content": prompt}],
+            ),
         )
         try:
             data = json.loads(response.content[0].text.strip())

@@ -1,10 +1,7 @@
 import urllib.parse
 
-from playwright.async_api import Browser
-
 from src.discovery.base import BaseDiscovery
-from src.profile.loader import SearchConfig
-from src.tracker.db import Application, ApplicationDB
+from src.tracker.db import Application
 
 
 class NaukriDiscovery(BaseDiscovery):
@@ -20,7 +17,11 @@ class NaukriDiscovery(BaseDiscovery):
 
     async def _search_one(self, title: str, location: str) -> list[Application]:
         page = await self.browser.new_page()
-        url_path = f"{self.BASE_URL}/{urllib.parse.quote(title.lower().replace(' ', '-'))}-jobs"
+        slug = urllib.parse.quote(title.lower().replace(' ', '-'))
+        params = urllib.parse.urlencode({"l": location}) if location and location != "Remote" else ""
+        url_path = f"{self.BASE_URL}/{slug}-jobs"
+        if params:
+            url_path = f"{url_path}?{params}"
         try:
             await page.goto(url_path)
             await page.wait_for_selector(".list", timeout=10000)

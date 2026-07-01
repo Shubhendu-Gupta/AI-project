@@ -19,11 +19,23 @@ def test_profile_path_custom(tmp_path):
     assert path == tmp_path / "indeed"
 
 
-def test_profile_dir_created(tmp_path):
-    """The profile directory can be created via mkdir when needed."""
-    session = BrowserSession("testsite", profiles_dir=tmp_path)
-    path = session.profile_path()
-    # Simulate the directory creation that start() would do
-    path.mkdir(parents=True, exist_ok=True)
-    assert path.exists()
-    assert path.is_dir()
+@pytest.mark.asyncio
+async def test_profile_dir_created(tmp_path):
+    """BrowserSession.start() creates the profile directory."""
+    from unittest.mock import AsyncMock, patch
+
+    session = BrowserSession("test_source", profiles_dir=tmp_path / "profiles")
+
+    mock_context = AsyncMock()
+    mock_playwright = AsyncMock()
+    mock_playwright.chromium.launch_persistent_context = AsyncMock(return_value=mock_context)
+
+    with patch("src.engine.browser.async_playwright") as mock_ap:
+        mock_ap_instance = AsyncMock()
+        mock_ap_instance.start = AsyncMock(return_value=mock_playwright)
+        mock_ap.return_value = mock_ap_instance
+
+        await session.start()
+
+    assert (tmp_path / "profiles" / "test_source").exists()
+    assert (tmp_path / "profiles" / "test_source").is_dir()

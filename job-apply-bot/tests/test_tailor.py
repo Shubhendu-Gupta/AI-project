@@ -64,8 +64,6 @@ def test_tailor_calls_llm(tmp_path):
     tailor.tailor(profile, job_description=job_description, output_path=output_path)
 
     assert llm.messages.create.called
-    call_kwargs = llm.messages.create.call_args
-    # The prompt is in the messages argument
-    messages = call_kwargs[1].get("messages") or call_kwargs[0][0] if call_kwargs[0] else call_kwargs[1]["messages"]
+    messages = llm.messages.create.call_args.kwargs["messages"]
     prompt_text = messages[0]["content"]
     assert job_description in prompt_text

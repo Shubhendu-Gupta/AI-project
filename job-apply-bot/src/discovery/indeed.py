@@ -1,10 +1,7 @@
 import urllib.parse
 
-from playwright.async_api import Browser
-
 from src.discovery.base import BaseDiscovery
-from src.profile.loader import SearchConfig
-from src.tracker.db import Application, ApplicationDB
+from src.tracker.db import Application
 
 
 class IndeedDiscovery(BaseDiscovery):
