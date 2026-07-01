@@ -69,7 +69,7 @@ describe('useNewsApi — devto category', () => {
 
 describe('useNewsApi — error state', () => {
   it('sets error when fetch fails', async () => {
-    vi.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
+    vi.mocked(fetch).mockRejectedValue(new Error('Network error'))
 
     const { result } = renderHook(() => useNewsApi('hackernews', 1))
     await waitFor(() => expect(result.current.loading).toBe(false))
