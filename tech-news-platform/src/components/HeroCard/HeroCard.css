@@ -1,0 +1,99 @@
+.hero-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .hero-card { grid-template-columns: 1fr; }
+}
+
+.hero-card-image-link { display: block; }
+
+.hero-card-image,
+.hero-card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-card-body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hero-card-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.hero-card-badge--hackernews { background: #fff3e0; color: #e65100; }
+.hero-card-badge--devto { background: #e8f5e9; color: #2e7d32; }
+
+.hero-card-title-link { text-decoration: none; color: inherit; }
+
+.hero-card-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #0f172a;
+  margin: 0;
+}
+
+.hero-card-description {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.hero-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.hero-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.hero-card-author { font-size: 0.85rem; font-weight: 600; color: #475569; }
+.hero-card-time { font-size: 0.8rem; color: #94a3b8; }
+
+.hero-card-actions { display: flex; gap: 0.5rem; }
+
+.hero-card-action {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.875rem;
+  color: #475569;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.hero-card-action:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.hero-card-action.bookmarked { color: #f59e0b; border-color: #fcd34d; background: #fffbeb; }
