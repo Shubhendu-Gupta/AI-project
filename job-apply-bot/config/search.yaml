@@ -1,0 +1,6 @@
+job_titles: ["Backend Engineer", "Python Engineer", "Software Engineer"]
+locations: ["San Francisco, CA", "Remote"]
+remote_only: false
+salary_min: 120000
+experience_level: mid
+exclude_keywords: ["10+ years", "Staff", "Principal"]
