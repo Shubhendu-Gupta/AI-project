@@ -12,11 +12,7 @@ interface NewsCardProps {
 
 export const NewsCard = ({ article, isBookmarked, onBookmark }: NewsCardProps) => {
   const handleShare = async () => {
-    try {
-      await shareArticle(article)
-    } catch {
-      // share cancelled or failed silently
-    }
+    await shareArticle(article)
   }
 
   return (
@@ -36,7 +32,7 @@ export const NewsCard = ({ article, isBookmarked, onBookmark }: NewsCardProps) =
         <a href={article.url} target="_blank" rel="noopener noreferrer" className="news-card-title-link">
           <h2 className="news-card-title">{article.title}</h2>
         </a>
-        {article.description ? (
+        {article.description != null && article.source !== 'hackernews' ? (
           <p className="news-card-description">{article.description}</p>
         ) : (
           <p className="news-card-hn-meta">
